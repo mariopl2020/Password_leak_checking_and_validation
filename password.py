@@ -1,3 +1,5 @@
+from hashlib import sha1
+
 class PasswordsSet():
 	"""Represents group of password"""
 
@@ -41,3 +43,23 @@ class PasswordsSet():
 			self.passwords_list.append(clean_password)
 		print(self.passwords_list)
 		return self.passwords_list
+
+	def encode_passwords(self):
+		"""Transforms trial passwords from string to byte form
+
+		Returns:
+			encoded_passwords (list): trial passwords in byte forms"""
+
+		encoded_passwords = [password.encode() for password in self.passwords_list]
+		return encoded_passwords
+
+	def hash_passwords(self):
+		"""Transforms trial passwords in byte form to hashed hexidecimal form
+
+		Returns:
+			hashed_passwords (list): trial passwords in hashed hexidecimal forms"""
+
+		encoded_passwords = self.encode_passwords()
+		hashed_passwords = [sha1(encoded_password).hexdigest() for encoded_password in encoded_passwords]
+		return hashed_passwords
+
