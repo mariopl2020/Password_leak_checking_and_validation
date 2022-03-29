@@ -1,3 +1,2 @@
 /env/
-program.py
-passwords_api.py
+.gitignore

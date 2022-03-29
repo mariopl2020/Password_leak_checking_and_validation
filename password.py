@@ -7,7 +7,9 @@ class Password():
 		self.password_content = password_content
 		self.encoded_content = b""
 		self.hashed_content = ""
-		self.prefixes_hashed_content = ""
+		self.hashed_content_prefix = ""
+		self.leaks_number = 0
+		self.is_safe = None
 
 	def __repr__(self):
 		"""Text representation of single password

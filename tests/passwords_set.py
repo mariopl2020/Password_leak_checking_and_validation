@@ -103,9 +103,9 @@ def test_hash_passwords():
 	# GIVEN
 	test_passwords_set = PasswordsSet()
 	expected_hashed_passwords_content_list = [
-		'a2776d1d99ec7d9883a75f9f08eda3cf3289e50f',
-		'3b3d0b484df21b12e7837b748116a4bea3684456',
-		'7b02b4b09cb9bc9eb10a08cd368a6237b22f17ac']
+		'A2776D1D99EC7D9883A75F9F08EDA3CF3289E50F',
+		'3B3D0B484DF21B12E7837B748116A4BEA3684456',
+		'7B02B4B09CB9BC9EB10A08CD368A6237B22F17AC']
 	test_passwords_set.passwords_list = [Password('antek1234'), Password('annab'), Password('conversion2')]
 	# WHEN
 	test_passwords_set.encode_passwords()
@@ -121,7 +121,7 @@ def test_make_prefix_hashed_passwords():
 
 	# GIVEN
 	test_passwords_set = PasswordsSet()
-	expected_prefixes_hashed_passwords_content_list = ['a2776', '3b3d0', '7b02b']
+	expected_prefixes_hashed_passwords_content_list = ['A2776', '3B3D0', '7B02B']
 	test_passwords_set.passwords_list = [Password('antek1234'), Password('annab'), Password('conversion2')]
 	# WHEN
 	test_passwords_set.encode_passwords()
@@ -129,7 +129,7 @@ def test_make_prefix_hashed_passwords():
 	test_passwords_set.make_prefix_hashed_passwords()
 	# THEN
 	for index in range(len(test_passwords_set.passwords_list)):
-		assert test_passwords_set.passwords_list[index].prefixes_hashed_content \
+		assert test_passwords_set.passwords_list[index].hashed_content_prefix \
 			== expected_prefixes_hashed_passwords_content_list[index]
 
 
@@ -146,5 +146,5 @@ def test_fully_process_passwords():
 	#THEN
 	assert test_passwords_set.passwords_list[0].password_content == 'antek1234'
 	assert test_passwords_set.passwords_list[0].encoded_content == b'antek1234'
-	assert test_passwords_set.passwords_list[0].hashed_content == 'a2776d1d99ec7d9883a75f9f08eda3cf3289e50f'
-	assert test_passwords_set.passwords_list[0].prefixes_hashed_content == 'a2776'
+	assert test_passwords_set.passwords_list[0].hashed_content == 'A2776D1D99EC7D9883A75F9F08EDA3CF3289E50F'
+	assert test_passwords_set.passwords_list[0].hashed_content_prefix == 'A2776'

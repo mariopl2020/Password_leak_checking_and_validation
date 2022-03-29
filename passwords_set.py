@@ -51,16 +51,16 @@ class PasswordsSet():
 			password.encoded_content = password.password_content.encode()
 
 	def hash_passwords(self):
-		"""Transforms trial password's content in byte form to hashed hexidecimal form"""
+		"""Transforms trial password's content in byte form to hashed hexidecimal form in upper case"""
 
 		for password in self.passwords_list:
-			password.hashed_content = sha1(password.encoded_content).hexdigest()
+			password.hashed_content = sha1(password.encoded_content).hexdigest().upper()
 
 	def make_prefix_hashed_passwords(self):
 		"""Creates five characters prefix of hashed password to be processed in api requests"""
 
 		for password in self.passwords_list:
-			password.prefixes_hashed_content = password.hashed_content[0:5]
+			password.hashed_content_prefix = password.hashed_content[0:5]
 
 	def print_password_hash(self):
 		"""Prints summary of whole loaded trial passwords with their hashes"""
@@ -81,4 +81,7 @@ class PasswordsSet():
 		self.hash_passwords()
 		self.make_prefix_hashed_passwords()
 		self.print_password_hash()
+
+
+	# @TODO make methods what write save passwords and to other file that what are leaked
 
