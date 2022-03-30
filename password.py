@@ -18,3 +18,4 @@ class Password():
 
 		password_name = f"{self.password_content}"
 		return password_name
+

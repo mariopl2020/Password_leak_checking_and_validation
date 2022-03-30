@@ -5,15 +5,26 @@ from passwords_set import PasswordsSet
 from password import Password
 
 
-def test_give_filename():
-	"""Tests if returned string is correct"""
+def test_give_filename_existing():
+	"""Tests if method correctly returns filename when it exists"""
+
+	# GIVEN
+	test_passwords_set = PasswordsSet()
+	# WHEN
+	with mock.patch.object(builtins, 'input', lambda _: "trial_passwords.txt"):
+		# THEN
+		assert test_passwords_set.give_filename() == "trial_passwords.txt"
+
+
+def test_give_filename_not_existing():
+	"""Tests if method correctly returns None value when  provided filename does not exist"""
 
 	# GIVEN
 	test_passwords_set = PasswordsSet()
 	# WHEN
 	with mock.patch.object(builtins, 'input', lambda _: "my_passes"):
 		# THEN
-		assert test_passwords_set.give_filename() == "my_passes"
+		assert test_passwords_set.give_filename() == None
 
 
 def test_load_your_password_no_argument():
@@ -94,7 +105,7 @@ def test_encode_passwords():
 	# THEN
 	for index in range(len(test_passwords_set.passwords_list)):
 		assert test_passwords_set.passwords_list[index].encoded_content \
-			== expected_encoded_content_passwords_list[index]
+		       == expected_encoded_content_passwords_list[index]
 
 
 def test_hash_passwords():
@@ -113,7 +124,7 @@ def test_hash_passwords():
 	# THEN
 	for index in range(len(test_passwords_set.passwords_list)):
 		assert test_passwords_set.passwords_list[index].hashed_content \
-			== expected_hashed_passwords_content_list[index]
+		       == expected_hashed_passwords_content_list[index]
 
 
 def test_make_prefix_hashed_passwords():
@@ -130,7 +141,7 @@ def test_make_prefix_hashed_passwords():
 	# THEN
 	for index in range(len(test_passwords_set.passwords_list)):
 		assert test_passwords_set.passwords_list[index].hashed_content_prefix \
-			== expected_prefixes_hashed_passwords_content_list[index]
+		       == expected_prefixes_hashed_passwords_content_list[index]
 
 
 def test_fully_process_passwords():
@@ -138,12 +149,12 @@ def test_fully_process_passwords():
 	in every step
 	"""
 
-	#GIVEN
+	# GIVEN
 	test_passwords_set = PasswordsSet()
-	#WHEN
+	# WHEN
 	with mock.patch.object(builtins, 'input', lambda _: ""):
 		test_passwords_set.fully_process_passwords()
-	#THEN
+	# THEN
 	assert test_passwords_set.passwords_list[0].password_content == 'antek1234'
 	assert test_passwords_set.passwords_list[0].encoded_content == b'antek1234'
 	assert test_passwords_set.passwords_list[0].hashed_content == 'A2776D1D99EC7D9883A75F9F08EDA3CF3289E50F'
