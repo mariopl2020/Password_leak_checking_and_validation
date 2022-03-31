@@ -10,6 +10,7 @@ class Password():
 		self.hashed_content_prefix = ""
 		self.leaks_number = 0
 		self.is_safe = None
+		self.is_valid = True
 
 	def __repr__(self):
 		"""Text representation of single password

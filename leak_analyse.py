@@ -2,24 +2,22 @@ from passwords_set import PasswordsSet
 from passwords_api import PasswordsApi
 
 
-class Program():
-	"""Representation of single program to check, if user's trials passwords were leaked in the Internet"""
+class LeakAnalyse():
+	"""Representation of single password leak analyse to check, if user's trials passwords were leaked in the Internet"""
 
-	def __init__(self):
+	def __init__(self, user_passwords_set: PasswordsSet):
 		"""Initialization of new run of program"""
 
-		self.user_passwords_set = PasswordsSet()
+		self.user_passwords_set = user_passwords_set
 		self.api_passwords = PasswordsApi()
 
 	def main_run(self): #N
-		"""Collects group of main parts(called methods) of program what creates complete program run to start"""
+		"""Collects group of called methods what compares passwords with API request, gives results, show them and 
+		write to appropriate files""" #N
 
-		self.user_passwords_set.fully_process_passwords()
 		self.give_leak_numbers()
 		self.user_passwords_set.show_results()
 		self.user_passwords_set.save_all_passwords_details()
-
-	# @TODO experiment to divide it into 2 single methods
 
 	def give_leak_numbers(self):
 		"""Makes requests to API for all provided passwords (their hashed prefixes) by user, get response as block\
@@ -38,8 +36,3 @@ class Program():
 					break
 				else:
 					password.is_safe = True
-
-
-if __name__ == "__main__":
-	program = Program()
-	program.main_run()

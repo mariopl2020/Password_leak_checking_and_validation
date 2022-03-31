@@ -66,12 +66,42 @@ def test_load_your_password_list_length():
 
 
 def test_clear_password():
-	"""Tests if method returns list of passwords where content is cleared from whitespaces"""
+	"""Tests if method returns list of passwords where content is cleared from whitespaces amd eventual comas"""
 
 	# GIVEN
 	test_passwords_set = PasswordsSet()
 	test_passwords_raw_content = ["antek1234", "annab", "conversion2"]
 	test_passwords_set.load_your_passwords()
+	# WHEN
+	test_passwords_set.clear_passwords(test_passwords_set.passwords_list)
+	# THEN
+	for index in range(len(test_passwords_set.passwords_list)):
+		assert test_passwords_set.passwords_list[index].password_content == test_passwords_raw_content[index]
+
+
+def test_clear_password_coma_in_the_middle():
+	"""Tests if method returns list of passwords where content is cleared from whitespaces amd eventual comas
+	Object has string content with comas in the middle of string what should not be removed"""
+
+	# GIVEN
+	test_passwords_set = PasswordsSet()
+	test_passwords_raw_content = ["antek,1234", "annab  ", "conversion2"]
+	test_passwords_set.passwords_list = [Password("antek,1234,"), Password("annab  ,"), Password("conversion2,")]
+	# WHEN
+	test_passwords_set.clear_passwords(test_passwords_set.passwords_list)
+	# THEN
+	for index in range(len(test_passwords_set.passwords_list)):
+		assert test_passwords_set.passwords_list[index].password_content == test_passwords_raw_content[index]
+
+
+def test_clear_password_whitespaces():
+	"""Tests if method returns list of passwords where content is cleared from whitespaces. Object have whitespaces
+	in the middle of string what should not be removed"""
+
+	# GIVEN
+	test_passwords_set = PasswordsSet()
+	test_passwords_raw_content = ["antek,1234", "annab  ", "conversion2"]
+	test_passwords_set.passwords_list = [Password("antek,1234, "), Password("annab  ,  "), Password("conversion2,")]
 	# WHEN
 	test_passwords_set.clear_passwords(test_passwords_set.passwords_list)
 	# THEN
