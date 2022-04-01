@@ -12,32 +12,32 @@ class PasswordsSet():
 
 		self.passwords_list = []
 		self.filename = "trial_passwords.txt"
+		self.input_directory = "input"
 
-	@staticmethod
-	def give_filename():
+	def give_filename(self):
 		"""Asks user to give filename with trial passwords
 
 		Returns:
 			filename (str): name of file with trial passwords"""
 
-		current_path = os.getcwd()
+		directory_path = os.path.join(os.getcwd(), self.input_directory)
 		filename = input("Enter filename with trial passwords\n")
-		filepath = os.path.join(current_path, filename)
+		filepath = os.path.join(directory_path, filename)
 		if os.path.exists(filepath):
 			return filename
 		else:
-			print("Provided file does not exist. Used default fiel - trial_passwords.txt")
+			print("Provided file does not exist. Used default field - trial_passwords.txt")
 			return None
 
 	def load_your_passwords(self, filename: str = None):
 		"""Load file with trial passwords and convert them into list of Password objects
 
 		Arguments:
-			filename (str): name of file with passwords in the same directory"""
+			filename (str): name of file with passwords in input directory"""
 
 		if filename is None or filename == "":
 			filename = self.filename
-		with open(filename, "r") as file:
+		with open(os.path.join(self.input_directory, filename), "r") as file:
 			for password_content in file.readlines():
 				self.passwords_list.append(Password(password_content))
 
@@ -91,45 +91,3 @@ class PasswordsSet():
 		self.hash_passwords()
 		self.make_prefix_hashed_passwords()
 		self.print_password_hash()
-
-	def show_results(self): #N
-		"""Prints summary of password leaks"""
-
-		print("\nSummary of leaking analyse")
-		for password in self.passwords_list:
-			print(f"Trial password: {password.password_content + ',':20} its hash: {password.hashed_content + ',':41}"
-			      f" leaks number: {password.leaks_number: 5}, Is safe: {password.is_safe}")
-
-	def save_not_leaked_passwords(self): #N
-		"""Saves details for trial passwords without any leak in appropriate file"""
-
-		with open("not_leaked_passwords.txt", mode="w") as safe_file:
-			for password in self.passwords_list:
-				if password.is_safe:
-					safe_file.writelines(f"Trial password: {password.password_content + ',':30} its hash: "
-					                     f"{password.hashed_content + ',':41} IS SAFE!\n")
-
-	def save_leaked_passwords(self): #N
-		"""Saves details for trial passwords what had leaks in appropriate file"""
-
-		with open("leaked_passwords.txt", "w") as dangerous_file:
-			for password in self.passwords_list:
-				if not password.is_safe:
-					dangerous_file.writelines(f"Trial password: {password.password_content + ',':30} its hash: "
-					                          f"{password.hashed_content + ',':41} leaks number: "
-					                          f"{password.leaks_number: 5},\n")
-
-	def save_all_passwords_details(self): #N
-		"""Comprehensively process all analysed trial passwords and save their details to appropriate file depending on
-		it is safe or leaked"""
-
-		with open("not_leaked_passwords.txt", mode="w") as safe_file, \
-			open("leaked_passwords.txt", "w") as dangerous_file:
-			for password in self.passwords_list:
-				if password.is_safe:
-					safe_file.writelines(f"Trial password: {password.password_content + ',':30} its hash: "
-					                     f"{password.hashed_content + ',':41} IS SAFE!\n")
-				elif not password.is_safe:
-					dangerous_file.writelines(f"Trial password: {password.password_content + ',':30} its hash: "
-					                          f"{password.hashed_content + ',':41} leaks number: "
-					                          f"{password.leaks_number: 5},\n")
