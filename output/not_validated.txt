@@ -1,0 +1,3 @@
+Trial password: mystery2python4_scala          IS NOT VALID
+Trial password: board20                        IS NOT VALID
+Trial password: trouble2python4_scale          IS NOT VALID

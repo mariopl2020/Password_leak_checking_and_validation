@@ -20,7 +20,7 @@ class Program():
 
 		self.user_passwords_set.fully_process_passwords()
 		self.leak_analyse.main_run()
-		self.password_validation.is_valid()
+		self.password_validation.main_run()
 
 
 if __name__ == "__main__":

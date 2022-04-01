@@ -139,3 +139,30 @@ class PasswordValidation():
                 if not validator.is_valid():
                     password.is_valid = False
                     break
+
+    def show_validation_results(self): #N
+        """Prints results of password's validation analyse"""
+
+        print("Summary of validation analyse")
+        for password in self.user_passwords_set.passwords_list:
+            is_valid = "is valid" if password.is_valid else " is not valid"
+            print(f"Trial password: {password.password_content:20} {is_valid}")
+
+    def save_validation_results(self): #N
+        """Write validation results into files dividing them into validated and not validated"""
+
+        with open(r"output\validated.txt", mode="w") as validated_file, \
+                open(r"output\not_validated.txt", mode="w") as not_validated_file:
+            for password in self.user_passwords_set.passwords_list:
+                if password.is_valid:
+                    validated_file.writelines(f"Trial password: {password.password_content:30} IS VALID\n")
+                elif not password.is_valid:
+                    not_validated_file.writelines(f"Trial password: {password.password_content:30} IS NOT VALID\n")
+
+    def main_run(self): #N
+        """Is a called methods set what completely validates provided passwords, print them on the screen and
+        save into proper files"""
+
+        self.is_valid()
+        self.show_validation_results()
+        self.save_validation_results()
